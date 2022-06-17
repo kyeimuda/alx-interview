@@ -14,4 +14,4 @@ def pascal_triangle(n):
 
         rowList.append(new)
 
-        return rowList
+    return rowList
