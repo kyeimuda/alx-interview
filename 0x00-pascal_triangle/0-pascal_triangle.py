@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """returns a pascal triangle"""
 
@@ -21,23 +20,29 @@ def pascal_triangle(n):
         elif n == 1:
             newRowColomn = rowList * (n+1)
             prevRow = newRowColomn
+            print(prevRow)
             triangle.append(newRowColomn)
-        elif n > 1:
+
+        else:
+            print("===================")
             newRowColomn = rowList * (n+1)
             colomns = len(newRowColomn)
-            if newRowColomn[0] and newRowColomn[colomns - 1]:
-                newRowColomn[0] = 1
-                newRowColomn[colomns - 1] = 1
-            else:
-                for space in newRowColomn:
-                    start = 0
-                    if not (newRowColomn[0]) and not (newRowColomn[colomns - 1]):
-                        results = prevSpace[start] + prevSpace[start + 1]
-                        space = result
-                    start += 1
 
-                prevRow = newRowColomn
-                triangle.append(newRowColomn)
-                        
+            i = 0
+            start = 0
+            for space in newRowColomn:
+                
+                if (i == 0) or (i == colomns - 1):
+                    newRowColomn[0] = 1
+                    newRowColomn[colomns - 1] = 1
+                else:
+                    input = prevRow[start] + prevRow[start + 1]
+                    newRowColomn[i] = input
+                    start += 1
+                i += 1
+
+            prevRow = newRowColomn
+            triangle.append(newRowColomn)
             
+                
     return triangle
