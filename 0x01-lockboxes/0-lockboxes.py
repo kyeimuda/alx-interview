@@ -3,7 +3,7 @@
 lockboxes
 """
 
-    
+
 def canUnlockAll(boxes):
     """
     This function returns true if all boxes can be opened else false
@@ -13,31 +13,29 @@ def canUnlockAll(boxes):
     keys = []
     prevKeys = []
 
-    
-    if boxes[0]:
-        box1 = boxes[0]
+    # stores keys of the first box
+    if boxesToOpen[0]:
+        box1 = boxesToOpen[0]
         for key in box1:
             keys.append(key)
-            boxes[0] = "opened"
+        boxesToOpen[0].clear()
+        boxesToOpen[0].append("opened")
 
-            
-    for box in boxes:
-        if (len(box) != 0) and (box != boxes[0]):
-            for key in box:
-                keys.append(key)
-    finalkeys = set(keys)
-    index = 0
-    for key in finalkeys:
-        for box in boxes:
-            if box == boxes[0]:
-                index += 1
-            else:
-                if key == index:
-                    box = "opened"
-                    index += 1
+    # checks if box can be opened and opens box
+    for key in keys:
+        for box in boxesToOpen:
+            if (boxesToOpen.index(box) == key) and ("opened" not in box):
+                for key in box:
+                    keys.append(key)
+                boxesToOpen[boxesToOpen.index(box)].clear()
+                boxesToOpen[boxesToOpen.index(box)].append("opened")
 
-                
-    for box in boxes:
-        if box != "opened":
-            return False
+    # returns true or first if all boxes can be opened or not
+    boxesNotOpened = []
+    for box in boxesToOpen:
+        if "opened" not in box:
+            boxesNotOpened.append(box)
+
+    if boxesNotOpened == []:
         return True
+    return False
