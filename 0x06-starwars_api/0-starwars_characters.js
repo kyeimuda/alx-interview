@@ -25,11 +25,11 @@ request(url, (error, response, body) => {
     const url = character;
     const promise = new Promise((resolve, reject) => {
       request(url, (error, response, body) => {
-	if (error) {
+        if (error) {
           reject(error);
-	    return;
-	}
-	const json = JSON.parse(body);
+          return;
+        }
+        const json = JSON.parse(body);
         resolve(json.name);
       });
     });
