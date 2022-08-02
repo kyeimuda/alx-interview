@@ -31,3 +31,73 @@ def is_valid(board, row, col):
     for i, j in lower_diag:
         if board[i][j] == 1:
             return False
+
+    return True
+
+
+def nqueens_helper(board, col):
+    """
+    Helper function for nqueens
+    Args:
+        board: 2D array representing the board
+        col: column to start from
+    Returns:
+        Boolean: True if a solution is found, False otherwise
+    """
+    if col >= len(board):
+        print_board(board, len(board))
+    for i in range(len(board)):
+        if is_valid(board, i, col):
+            board[i][col] = 1
+            result = nqueens_helper(board, col + 1)
+            if result:
+                return True
+            board[i][col] = 0
+    return False
+
+
+def print_board(board, n):
+    """
+    Prints positions of the queens
+    Args:
+        board: 2D array representing the board
+        n: size of the board
+    Returns:
+        None
+    """
+    b = []
+
+    for i in range(n):
+        for j in range(n):
+            if board[i][j] == 1:
+                b.append([i, j])
+    print(b)
+
+
+def nqueens(n):
+    """
+    Finds all possible solutions to the n-queens problem
+    Args:
+        n: size of the board
+    Returns:
+        None
+    """
+    board = []
+    for i in range(n):
+        row = [0] * n
+        board.append(row)
+    nqueens_helper(board, 0)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        exit(1)
+    queens = sys.argv[1]
+    if not queens.isnumeric():
+        print("N must be a number")
+        exit(1)
+    elif int(queens) < 4:
+        print("N must be at least 4")
+        exit(1)
+    nqueens(int(queens))
