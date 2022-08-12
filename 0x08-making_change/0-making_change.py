@@ -1,36 +1,30 @@
 #!/usr/bin/python3
 """
-Contains a method that returns the perimeter of the
-island described in grid
+Given a pile of coins of different values, determine the
+fewest number of coins needed to meet a given amount total.
 """
 
 
-def check_perimeter(grid, i, j):
+def makeChange(coins, total):
     """
-    check surroundings for water. If water body
-    on boundary, add 1 to perimeter otherwise add 0
-    """
-    mask = 1
-    top = grid[i - 1][j] ^ mask if i > 0 else 1
-    bottom = grid[i + 1][j] ^ mask if i < (len(grid) - 1) else 1
-    left = grid[i][j - 1] ^ mask if j > 0 else 1
-    right = grid[i][j + 1] ^ mask if j < (len(grid[i]) - 1) else 1
-    positions = top + bottom + right + left
-    return positions
-
-
-def island_perimeter(grid):
-    """
-    Calculates the perimeter of an island given a grid
+    Determines the fewest coins to meet total
     Args:
-        grid (list): list of lists of integers
+        coins (list): list of coins
+        total (int): value to meet as total
     Returns:
-        int: perimeter of island
+        coins (int): fewest number of coins needed to meet total
+        (0) if total is 0 or less
+        (-1) if no number of the coins can meet the total
     """
-    perimeter = 0
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            if grid[i][j] == 1:
-                perimeter += check_perimeter(grid, i, j)
-
-    return perimeter
+    if total <= 0:
+        return 0
+    min_coins = [0] + [float('inf')] * total
+    for i in range(1, total + 1):
+        for coin in coins:
+            if coin <= i:
+                num_coins = min_coins[i - coin] + 1
+                if num_coins < min_coins[i]:
+                    min_coins[i] = num_coins
+    if min_coins[-1] == float("inf"):
+        return -1
+    return min_coins[total]
