@@ -10,7 +10,6 @@ status_codes = {200: 0, 301: 0, 400: 0, 401: 0,
 print_counter = 0
 size_summation = 0
 
-
 def print_logs():
     """
     Prints status codes to the logs
